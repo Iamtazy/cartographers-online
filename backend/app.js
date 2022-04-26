@@ -16,9 +16,13 @@ const io = new socketio.Server(httpServer, {
 })
 
 io.on('connection', (socket) => {
-    console.log('User connected with ID: ' + socket.id)
+    
     socket.on('disconnect', () => {
-        console.log('User disconnected with ID: ' + socket.id)
+        
+    })
+    socket.on('getRooms', () => {
+        console.log('getRooms called')
+        socket.emit('rooms', {rooms: '1'})
     })
 })
 
