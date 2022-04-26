@@ -2,6 +2,7 @@ const express = require('express')
 const http = require('http')
 const socketio = require('socket.io')
 const cors = require('cors')
+require('dotenv').config()
 
 const app = express()
 app.use(cors())
@@ -10,7 +11,7 @@ const httpServer = http.createServer(app)
 
 const io = new socketio.Server(httpServer, {
     cors: {
-        origin: 'http://localhost:3000'
+        origin: process.env.FRONTEND_URL
     }
 })
 
