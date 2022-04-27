@@ -20,6 +20,22 @@ io.on('connection', (socket) => {
     socket.on('disconnect', () => {
         
     })
+
+    socket.on('setUsername', async (username) => {
+        const sockets = await io.fetchSockets()
+        if ( sockets.every((socket) => {
+            if (socket.username) {
+                return socket.username != username
+            }
+                return true;
+        })){
+            socket.username = username
+            socket.emit('validUsername')
+        } else {
+            socket.emit('invalidUsername')
+        }
+    })
+
     socket.on('getRooms', () => {
         console.log('getRooms called')
         socket.emit('rooms', {rooms: '1'})
