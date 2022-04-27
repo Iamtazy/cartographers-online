@@ -25,7 +25,7 @@ export default function Login() {
       socket.off('validUsername')
       socket.off('invalidUsername')
     }
-  }, [socket])
+  }, [navigate])
 
   const handleLogin = () => {
     socket.emit('setUsername', username)
@@ -33,8 +33,8 @@ export default function Login() {
 
   return (
     <div className='container'>
-      <h1>Cartographers</h1>
-      <p>Username:</p>
+      <div className='title'>Cartographers</div>
+      <div className='loginLabel'>Username:</div>
       <input type='text' name='username' id='username' onChange={(event) => setUsername(event.target.value)}/>
       <button onClick={handleLogin}>Login</button>
       {!isValidUsername && <p>This username is already taken, please choose another one!</p>}

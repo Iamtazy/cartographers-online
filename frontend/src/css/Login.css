@@ -3,7 +3,17 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    height: 95vh;
+    height: 100vh;
+}
+
+.title {
+    font-size: 54px;
+    margin: 20px;
+}
+
+.loginLabel {
+    font-size: 34px;
+    margin: 20px;
 }
 
 #username {
