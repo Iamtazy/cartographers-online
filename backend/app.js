@@ -17,6 +17,9 @@ const io = new socketio.Server(httpServer, {
 
 const LOBBY = 'lobby'
 
+//Players and rooms are always getting resent to re-render components, although performance-wise,
+//it'd be better to have handlers for a single player leaving and updating the view by that
+
 io.on('connection', (socket) => {
     socket.join(LOBBY)
     socket.leave(socket.id)
@@ -38,7 +41,7 @@ io.on('connection', (socket) => {
             socket.username = username
             socket.emit('validUsername')
             //When someone "joins" by selecting a username, update the lobby
-            io.in(LOBBY).emit('players', await getPlayers())
+            socket.to(LOBBY).emit('players', await getPlayers())
         } else {
             socket.emit('invalidUsername')
         }
@@ -57,22 +60,28 @@ io.on('connection', (socket) => {
     socket.on('createRoom', async (room) => {
         socket.join(room)
         socket.leave(LOBBY)
-        socket.emit('playersInRoom', await getPlayers(Array.from(socket.rooms)[0]))
-        io.in(LOBBY).emit('rooms', getRooms())
+        socket.emit('playersInRoom', await getPlayers(room))
+        io.to(LOBBY).emit('rooms', getRooms())
     })
 
     socket.on('joinRoom', async (room) => {
         socket.join(room)
         socket.leave(LOBBY)
-        socket.emit('playersInRoom', await getPlayers(Array.from(socket.rooms)[0]))
+        socket.emit('playersInRoom', await getPlayers(room))
+        socket.to(room).emit('playersInRoom', await getPlayers(room))
     })
 
-    socket.on('leaveRoom', () => {
-        //TODO - if the room is empty after leaving, delete it and emit to lobby
-        socket.leave(Array.from(socket.rooms)[0])
+    socket.on('leaveRoom', async (room) => {
+        socket.leave(room)
         socket.join(LOBBY)
+        io.to(room).emit('playersInRoom', await getPlayers(room))
     })
 })
+
+    //When a room gets deleted, update everyone in the lobby
+    io.of("/").adapter.on("delete-room", () => {
+        io.to(LOBBY).emit('rooms', getRooms())
+    });
 
 const getPlayers = async (room) => {
     let sockets;
