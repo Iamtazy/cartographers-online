@@ -15,12 +15,17 @@ const io = new socketio.Server(httpServer, {
     }
 })
 
+const LOBBY = 'lobby'
+
 io.on('connection', (socket) => {
+    socket.join(LOBBY)
+    socket.leave(socket.id)
     
     socket.on('disconnect', () => {
         
     })
 
+    //Username handlers
     socket.on('setUsername', async (username) => {
         const sockets = await io.fetchSockets()
         if ( sockets.every((socket) => {
@@ -36,9 +41,15 @@ io.on('connection', (socket) => {
         }
     })
 
+    //Room handlers
     socket.on('getRooms', () => {
-        console.log('getRooms called')
-        socket.emit('rooms', {rooms: '1'})
+        const rooms = Array.from(io.of('/').adapter.rooms.keys())
+        socket.emit('rooms', rooms.filter((room) => { return room != LOBBY }))
+    })
+
+    socket.on('createRoom', () => {
+        socket.join(socket.username + "'s room")
+        socket.leave(LOBBY)
     })
 })
 

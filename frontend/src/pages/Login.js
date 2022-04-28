@@ -13,7 +13,7 @@ export default function Login() {
 
   useEffect(() => {
     socket.on('validUsername', () => {
-      navigate('/lobbies')
+      navigate('/rooms')
     })
 
     socket.on('invalidUsername', () => {
