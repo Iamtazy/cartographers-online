@@ -2,6 +2,7 @@ import React, { useContext, useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { GameContext } from '../context/gameContext'
 import { SocketContext } from '../context/socketContext'
+import styles from '../css/Lobby.module.css'
 
 export default function Lobby() {
 
@@ -45,18 +46,20 @@ export default function Lobby() {
     }
 
   return (
-    <div>
-      <div>
-        <h1>Main lobby</h1>
-        <h3>Rooms</h3>
-        { rooms.map((room) => { return <div key={room}><p>{room}</p> <button id={room} onClick={() => joinRoom(room)}>Join</button></div> }) }
+    <div className={styles.container}>
+      <h1 className={styles.title}>Main lobby</h1>
+      <div className={styles.lobbyDisplayContainer}>
+      <div className={styles.lobbyDisplay}>
+          <h3>Players</h3>
+          { players.map((player) => { return <p key={player}>{player}</p> }) }
+        </div>
+        <div className={styles.lobbyDisplay}>
+          <h3>Rooms</h3>
+          { rooms.map((room) => { return <div className={styles.roomContainer} key={room}><div className={styles.roomName}>{room}</div> <button id={room} className={styles.button} onClick={() => joinRoom(room)}>Join</button></div> }) }
+        </div>
       </div>
-      <div>
-        <h3>Players</h3>
-        { players.map((player) => { return <p key={player}>{player}</p> }) }
-      </div>
-      <input type='text' name='roomName' onChange={(event) => setRoomName(event.target.value)} />
-      <button onClick={createRoom}>Create a room</button>
+      <input type='text' name='roomName' className={styles.roomNameInput} onChange={(event) => setRoomName(event.target.value)} />
+      <button className={styles.button} onClick={createRoom}>Create a room</button>
     </div>
     
   )
