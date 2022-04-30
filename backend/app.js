@@ -60,6 +60,7 @@ io.on('connection', (socket) => {
     socket.on('createRoom', async (room) => {
         socket.join(room)
         socket.leave(LOBBY)
+        socket.isReady = false;
         socket.emit('playersInRoom', await getPlayers(room))
         io.to(LOBBY).emit('rooms', getRooms())
     })
@@ -67,13 +68,19 @@ io.on('connection', (socket) => {
     socket.on('joinRoom', async (room) => {
         socket.join(room)
         socket.leave(LOBBY)
-        socket.emit('playersInRoom', await getPlayers(room))
-        socket.to(room).emit('playersInRoom', await getPlayers(room))
+        socket.isReady = false;
+        io.to(room).emit('playersInRoom', await getPlayers(room))
     })
 
     socket.on('leaveRoom', async (room) => {
         socket.leave(room)
         socket.join(LOBBY)
+        io.to(room).emit('playersInRoom', await getPlayers(room))
+    })
+
+    socket.on('isReadyChange', async (isReady) => {
+        socket.isReady = isReady
+        const room = Array.from(socket.rooms)[0]
         io.to(room).emit('playersInRoom', await getPlayers(room))
     })
 })
@@ -87,10 +94,11 @@ const getPlayers = async (room) => {
     let sockets;
     if (room === undefined) {
         sockets = await io.fetchSockets()
+        return sockets.map((socket) => socket.username)
     } else {
         sockets = await io.in(room).fetchSockets()
+        return sockets.map((socket) => { return {'username' : socket.username, 'isReady': socket.isReady}})
     }
-    return sockets.map((socket) => socket.username)
 }
 
 const getRooms = () => {
