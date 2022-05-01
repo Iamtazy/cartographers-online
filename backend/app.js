@@ -3,6 +3,7 @@ const http = require('http')
 const socketio = require('socket.io')
 const cors = require('cors')
 require('dotenv').config()
+const { STARTER_BOARD } = require('./starterBoard')
 
 const app = express()
 app.use(cors())
@@ -83,12 +84,22 @@ io.on('connection', (socket) => {
         const room = Array.from(socket.rooms)[0]
         io.to(room).emit('playersInRoom', await getPlayers(room))
     })
+
+    //Game handlers
+    socket.on('getStarterGameState', async () => {
+        socket.emit('playersInRoom', await getPlayers(Array.from(socket.rooms)[0]))
+        if (socket.gameState === undefined) {
+            socket.gameState = initializeGameState()
+            socket.emit('gameState', socket.gameState)
+        }
+    })
 })
 
-    //When a room gets deleted, update everyone in the lobby
-    io.of("/").adapter.on("delete-room", () => {
-        io.to(LOBBY).emit('rooms', getRooms())
-    });
+
+//When a room gets deleted, update everyone in the lobby
+io.of("/").adapter.on("delete-room", () => {
+    io.to(LOBBY).emit('rooms', getRooms())
+});
 
 const getPlayers = async (room) => {
     let sockets;
@@ -104,6 +115,12 @@ const getPlayers = async (room) => {
 const getRooms = () => {
     const rooms = Array.from(io.of('/').adapter.rooms.keys())
     return rooms.filter((room) => room != LOBBY)
+}
+
+const initializeGameState = () => {
+    return gameState = {
+        'board' :  STARTER_BOARD
+    }
 }
 
 httpServer.listen(8080, () => {console.log('Server is running!')})

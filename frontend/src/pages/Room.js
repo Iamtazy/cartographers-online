@@ -27,10 +27,9 @@ export default function Room() {
     })
 
     return () => {
-      socket.emit('leaveRoom', room)
       socket.off('playersInRoom')
     }
-}, [socket, room])
+}, [socket, room, navigate])
 
   return (
     <div>

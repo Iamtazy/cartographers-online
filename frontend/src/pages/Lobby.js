@@ -7,13 +7,17 @@ import styles from '../css/Lobby.module.css'
 export default function Lobby() {
 
     const socket = useContext(SocketContext)
-    const { setRoom } = useContext(GameContext)
+    const { room, setRoom } = useContext(GameContext)
     const navigate = useNavigate()
     const [rooms, setRooms] = useState([])
     const [players, setPlayers] = useState([])
     const [roomName, setRoomName] = useState("")
 
     useEffect(() => {
+        if (room !== ""){
+          socket.emit('leaveRoom', room)
+        }
+
         socket.on('rooms', (rooms) => {
           setRooms(rooms)
         })
@@ -29,7 +33,7 @@ export default function Lobby() {
           socket.off('rooms')
           socket.off('players')
         }
-    }, [socket])
+    }, [socket, room])
 
     const createRoom = () => {
       if (roomName.length > 0){
