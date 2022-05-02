@@ -77,6 +77,7 @@ io.on('connection', (socket) => {
     socket.on('leaveRoom', async (room) => {
         socket.leave(room)
         socket.join(LOBBY)
+        delete socket.gameState
         io.to(room).emit('playersInRoom', await getPlayers(room))
     })
 

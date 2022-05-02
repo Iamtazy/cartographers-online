@@ -1,15 +1,8 @@
-const scoringDecks = [
-    [
-        {
-
-        },
-        {},
-        {},
-        {}
-    ],
-    {},
-    {},
-    {}
+const SCORING_DECKS = [
+    ['greenbough', 'sentinelWood', 'stonesideForest', 'treetower'],
+    ['canalLake', 'magesValley', 'shoresideExpanse', 'theGoldenGranary'],
+    ['greatCity','greengoldPlains', 'shieldgate', 'wildholds'],
+    ['borderlands','lostBarony', 'theBrokenRoad', 'theCauldrons']
 ]
 
 const SEASON_CARDS = {
@@ -36,5 +29,6 @@ const SEASON_CARDS = {
 }
 
 module.exports = {
-    SEASON_CARDS
+    SEASON_CARDS,
+    SCORING_DECKS
 }

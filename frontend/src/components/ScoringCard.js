@@ -60,6 +60,6 @@ export default function ScoringCard({ card }) {
 
 
   return (
-    <img alt={renderCard(card).alt} src={renderCard(card).src}/>
+    <img height='250' alt={renderCard(card).alt} src={renderCard(card).src}/>
   )
 }

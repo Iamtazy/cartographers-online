@@ -4,6 +4,7 @@ import { GameContext } from '../context/gameContext'
 import styles from '../css/Game.module.css'
 import Tile from '../components/Tile'
 import SeasonCard from '../components/SeasonCard'
+import ScoringCard from '../components/ScoringCard'
 
 
 export default function Game() {
@@ -11,7 +12,7 @@ export default function Game() {
   const socket = useContext(SocketContext)
   const { room } = useContext(GameContext)
   const [playersInRoom, setPlayersInRoom] = useState([])
-  const [gameState, setGameState] = useState({ 'board': [], 'seasonCard': { 'name' : ''}})
+  const [gameState, setGameState] = useState({ 'board': [], 'seasonCard': { 'name' : ''}, 'scoringCards': []})
 
   useEffect(() => {
 
@@ -49,6 +50,7 @@ export default function Game() {
           </div>
         </div>
         <SeasonCard card={gameState.seasonCard.name} />
+        <div style={{'display': 'flex', 'flexDirection': 'row'}}>{gameState.scoringCards.map((card) => <div style={{'margin': '20px'}} key={card}><ScoringCard card={card}/></div>)}</div>
       </div>
     </div>
   )
