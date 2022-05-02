@@ -1,3 +1,5 @@
+const { SEASON_CARDS } = require('./gameObjectMappings')
+
 const STARTER_BOARD = [
     ['E', 'E', 'E', 'E', 'E', 'E', 'E', 'E', 'E', 'E', 'E'],
     ['E', 'E', 'E', 'MOU', 'E', 'R', 'E', 'E', 'E', 'E', 'E'],
@@ -12,6 +14,14 @@ const STARTER_BOARD = [
     ['E', 'E', 'E', 'E', 'E', 'E', 'E', 'E', 'E', 'E', 'E']
 ]
 
+const getStartingState = () => {
+    return {
+        'board' :  STARTER_BOARD,
+        'seasonCard': SEASON_CARDS.spring
+    }
+}
+
 module.exports = {
-    STARTER_BOARD
+    STARTER_BOARD,
+    getStartingState
 }

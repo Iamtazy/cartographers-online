@@ -3,11 +3,12 @@ const http = require('http')
 const socketio = require('socket.io')
 const cors = require('cors')
 require('dotenv').config()
-const { STARTER_BOARD } = require('./starterBoard')
+const { STARTER_BOARD, getStartingState } = require('./startingState')
 
 const app = express()
 app.use(cors())
 
+//Should be HTTPS for public use
 const httpServer = http.createServer(app)
 
 const io = new socketio.Server(httpServer, {
@@ -89,7 +90,9 @@ io.on('connection', (socket) => {
     socket.on('getStarterGameState', async () => {
         socket.emit('playersInRoom', await getPlayers(Array.from(socket.rooms)[0]))
         if (socket.gameState === undefined) {
-            socket.gameState = initializeGameState()
+            socket.gameState = getStartingState()
+            socket.emit('gameState', socket.gameState)
+        } else {
             socket.emit('gameState', socket.gameState)
         }
     })
@@ -115,12 +118,6 @@ const getPlayers = async (room) => {
 const getRooms = () => {
     const rooms = Array.from(io.of('/').adapter.rooms.keys())
     return rooms.filter((room) => room != LOBBY)
-}
-
-const initializeGameState = () => {
-    return gameState = {
-        'board' :  STARTER_BOARD
-    }
 }
 
 httpServer.listen(8080, () => {console.log('Server is running!')})

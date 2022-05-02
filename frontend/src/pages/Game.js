@@ -3,7 +3,7 @@ import { SocketContext } from '../context/socketContext'
 import { GameContext } from '../context/gameContext'
 import styles from '../css/Game.module.css'
 import Tile from '../components/Tile'
-
+import SeasonCard from '../components/SeasonCard'
 
 
 export default function Game() {
@@ -11,7 +11,7 @@ export default function Game() {
   const socket = useContext(SocketContext)
   const { room } = useContext(GameContext)
   const [playersInRoom, setPlayersInRoom] = useState([])
-  const [gameState, setGameState] = useState({ 'board': []})
+  const [gameState, setGameState] = useState({ 'board': [], 'seasonCard': { 'name' : ''}})
 
   useEffect(() => {
 
@@ -30,7 +30,7 @@ export default function Game() {
       socket.off('gameState')
     }
 
-  }, [socket, room, gameState])
+  }, [socket, room])
 
 
 
@@ -48,6 +48,7 @@ export default function Game() {
             }
           </div>
         </div>
+        <SeasonCard card={gameState.seasonCard.name} />
       </div>
     </div>
   )
