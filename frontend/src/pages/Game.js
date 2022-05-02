@@ -1,6 +1,10 @@
 import React, { useContext, useEffect, useState } from 'react'
 import { SocketContext } from '../context/socketContext'
 import { GameContext } from '../context/gameContext'
+import styles from '../css/Game.module.css'
+import Tile from '../components/Tile'
+
+
 
 export default function Game() {
 
@@ -26,12 +30,25 @@ export default function Game() {
       socket.off('gameState')
     }
 
-  }, [socket, room])
+  }, [socket, room, gameState])
+
+
 
   return (
     <div>
-      <div>Game</div>
-      {gameState.board.map((row, rowIndex) => { return <div key={rowIndex}> { row.map((cell, cellIndex) => { return <div style={{'display': 'inline'}} key={cellIndex}>{cell}, </div> })} </div> })}
+      <div className={styles.gameContainer}>
+        <div className={styles.boardContainer}>
+          <div className={styles.cellContainer}>
+            {gameState.board.map((row, rowIndex) => { return ( 
+            <div className={styles.row} key={rowIndex}> { row.map((cell, cellIndex) => { return ( 
+              <div className={styles.cell} row={rowIndex} col={cellIndex} key={cellIndex}>
+                <Tile value={cell}/>
+              </div> )})} 
+            </div> )})
+            }
+          </div>
+        </div>
+      </div>
     </div>
   )
 }
