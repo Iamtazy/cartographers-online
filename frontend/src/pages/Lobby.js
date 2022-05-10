@@ -2,7 +2,7 @@ import React, { useContext, useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { GameContext } from '../context/gameContext'
 import { SocketContext } from '../context/socketContext'
-import styles from '../css/Lobby.module.css'
+import styles from '../css/pages/Lobby.module.css'
 
 export default function Lobby() {
 

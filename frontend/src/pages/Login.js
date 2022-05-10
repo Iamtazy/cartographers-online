@@ -1,7 +1,7 @@
 import { useContext, useEffect, useState } from 'react'
 import { GameContext } from '../context/gameContext';
 import { useNavigate } from "react-router-dom";
-import  styles from '../css/Login.module.css'
+import  styles from '../css/pages/Login.module.css'
 import { socket } from '../context/socketContext';
 
 

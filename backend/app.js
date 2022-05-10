@@ -13,11 +13,12 @@ const httpServer = http.createServer(app)
 
 const io = new socketio.Server(httpServer, {
     cors: {
-        origin: [process.env.FRONTEND_URL, 'http://172.20.97.245:3000', '172.20.97.245:3000']
+        origin: process.env.FRONTEND_URL
     }
 })
 
 const LOBBY = 'lobby'
+const roomStates = {}
 
 //Players and rooms are always getting resent to re-render components, although performance-wise,
 //it'd be better to have handlers for a single player leaving and updating the view by that
@@ -89,12 +90,21 @@ io.on('connection', (socket) => {
 
     //Game handlers
     socket.on('getStarterGameState', async () => {
-        socket.emit('playersInRoom', await getPlayers(Array.from(socket.rooms)[0]))
-        if (socket.gameState === undefined) {
-            socket.gameState = getStartingState()
-            socket.emit('gameState', socket.gameState)
-        } else {
-            socket.emit('gameState', socket.gameState)
+        socket.gameStarted = true;
+        const room = Array.from(socket.rooms)[0];
+        const sockets = await io.in(room).fetchSockets()
+        socket.emit('playersInRoom', await getPlayers(room))
+        //Handles that the starting state only gets sent when the last player "starts" the game
+        if (sockets.every((socket) => socket.gameStarted === true)) {
+            const startingState = getStartingState();
+            sockets.forEach((socket) => {
+                socket.gameState = startingState
+            })
+            //Players get sent the same starting state at the same time
+            io.to(room).emit('gameState', startingState)
+            delete startingState.board
+            //Roomstate gets set to the starting state, without the board, since it's player specific
+            roomStates[room] = startingState;
         }
     })
 })

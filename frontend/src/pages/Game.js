@@ -1,7 +1,7 @@
 import React, { useContext, useEffect, useState } from 'react'
 import { SocketContext } from '../context/socketContext'
 import { GameContext } from '../context/gameContext'
-import styles from '../css/Game.module.css'
+import styles from '../css/pages/Game.module.css'
 import Tile from '../components/Tile'
 import SeasonCard from '../components/SeasonCard'
 import ScoringCard from '../components/ScoringCard'

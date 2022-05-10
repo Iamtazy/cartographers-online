@@ -1,7 +1,7 @@
 import React, { useContext, useEffect, useState } from 'react'
 import { SocketContext } from '../context/socketContext'
 import { GameContext } from '../context/gameContext'
-import styles from '../css/Room.module.css'
+import styles from '../css/pages/Room.module.css'
 import { useNavigate } from 'react-router-dom'
 
 export default function Room() {
