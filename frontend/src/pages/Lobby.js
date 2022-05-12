@@ -62,7 +62,7 @@ export default function Lobby() {
           { rooms.map((room) => { return <div className={styles.roomContainer} key={room}><div className={styles.roomName}>{room}</div> <button id={room} className={styles.button} onClick={() => joinRoom(room)}>Join</button></div> }) }
         </div>
       </div>
-      <input type='text' name='roomName' className={styles.roomNameInput} onChange={(event) => setRoomName(event.target.value)} />
+      <input type='text' name='roomName' className={styles.roomNameInput} onChange={(event) => setRoomName(event.target.value)} onKeyPress={(event) => { if (event.key === 'Enter') createRoom() }} />
       <button className={styles.button} onClick={createRoom}>Create a room</button>
     </div>
     

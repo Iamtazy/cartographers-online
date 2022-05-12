@@ -111,7 +111,8 @@ io.on('connection', (socket) => {
 
 
 //When a room gets deleted, update everyone in the lobby
-io.of("/").adapter.on("delete-room", () => {
+io.of("/").adapter.on("delete-room", (room) => {
+    delete roomStates.room
     io.to(LOBBY).emit('rooms', getRooms())
 });
 
