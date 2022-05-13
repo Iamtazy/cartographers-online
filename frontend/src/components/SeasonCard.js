@@ -1,4 +1,5 @@
 import React from 'react'
+import styles from '../css/components/Card.module.css';
 import spring from '../assets/seasons/spring.jpg';
 import summer from '../assets/seasons/summer.jpg';
 import fall from '../assets/seasons/fall.jpg';
@@ -23,6 +24,6 @@ export default function SeasonCard({ card }) {
     }
 
   return (
-    <img height='250' alt={renderCard(card).alt} src={renderCard(card).src}/>
+    <img className={styles.card} alt={renderCard(card).alt} src={renderCard(card).src}/>
   )
 }

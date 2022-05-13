@@ -1,4 +1,5 @@
 import React from 'react'
+import styles from '../css/components/Card.module.css';
 import borderlands from '../assets/scoring_cards/borderlands.jpg';
 import canalLake from '../assets/scoring_cards/canal_lake.jpg';
 import greatCity from '../assets/scoring_cards/great_city.jpg';
@@ -60,6 +61,6 @@ export default function ScoringCard({ card }) {
 
 
   return (
-    <img height='250' alt={renderCard(card).alt} src={renderCard(card).src}/>
+    <img className={styles.card} alt={renderCard(card).alt} src={renderCard(card).src}/>
   )
 }

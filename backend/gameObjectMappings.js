@@ -28,9 +28,10 @@ const SEASON_CARDS = [
     }
 ]
 
-const ambushCards = [
+const AMBUSH_CARDS = [
     {
-        'name' : 'bugbearAssault',
+        'name': 'bugbearAssault',
+        'type': 'ambush',
         'passingDirection': 'left',
         'shape': [
             [1,0,1,0],
@@ -41,6 +42,7 @@ const ambushCards = [
     },
     {
         'name': 'gnollRaid',
+        'type': 'ambush',
         'passingDirection': 'right',
         'shape': [
             [1,1,0,0],
@@ -51,6 +53,7 @@ const ambushCards = [
     },
     {
         'name': 'goblinAttack',
+        'type': 'ambush',
         'passingDirection': 'right',
         'shape': [
             [1,0,0,0],
@@ -61,6 +64,7 @@ const ambushCards = [
     },
     {
         'name': 'koboldOnslaught',
+        'type': 'ambush',
         'passingDirection': 'left',
         'shape': [
             [1,0,0,0],
@@ -71,9 +75,10 @@ const ambushCards = [
     }
 ]
 
-const exploreCards = [
+const EXPLORE_CARDS = [
     {
         'name' : 'farmland',
+        'type': 'explore',
         'turnTime': 1,
         'shapes': [
             [
@@ -91,6 +96,7 @@ const exploreCards = [
     },
     {
         'name' : 'fishingVillage',
+        'type': 'explore',
         'turnTime': 2,
         'shapes': [
             [
@@ -105,6 +111,7 @@ const exploreCards = [
     },
     {
         'name' : 'forgottenForest',
+        'type': 'explore',
         'turnTime': 1,
         'shapes': [
             [
@@ -122,6 +129,7 @@ const exploreCards = [
     },
     {
         'name' : 'greatRiver',
+        'type': 'explore',
         'turnTime': 1,
         'shapes': [
             [
@@ -140,6 +148,7 @@ const exploreCards = [
     },
     {
         'name' : 'hamlet',
+        'type': 'explore',
         'turnTime': 1,
         'shapes': [
             [
@@ -157,6 +166,7 @@ const exploreCards = [
     },
     {
         'name' : 'hinterlandStream',
+        'type': 'explore',
         'turnTime': 2,
         'shapes': [
             [
@@ -170,6 +180,7 @@ const exploreCards = [
     },
     {
         'name' : 'homestead',
+        'type': 'explore',
         'turnTime': 2,
         'shapes': [
             [
@@ -183,6 +194,7 @@ const exploreCards = [
     },
     {
         'name' : 'marshlands',
+        'type': 'explore',
         'turnTime': 2,
         'shapes': [
             [
@@ -196,6 +208,7 @@ const exploreCards = [
     },
     {
         'name' : 'orchard',
+        'type': 'explore',
         'turnTime': 2,
         'shapes': [
             [
@@ -209,6 +222,7 @@ const exploreCards = [
     },
     {
         'name' : 'riftLands',
+        'type': 'explore',
         'turnTime': 0,
         'shapes': [
             [
@@ -220,6 +234,7 @@ const exploreCards = [
     },
     {
         'name' : 'treetopVillage',
+        'type': 'explore',
         'turnTime': 2,
         'shapes': [
             [
@@ -233,14 +248,18 @@ const exploreCards = [
         'isFirstShapeForCoin': false
     },
     {
-        'name' : 'templeRuins'
+        'name' : 'templeRuins',
+        'type': 'ruin'
     },
     {
-        'name' : 'outpostRuins'
+        'name' : 'outpostRuins',
+        'type': 'ruin'
     }
 ]
 
 module.exports = {
     SEASON_CARDS,
-    SCORING_DECKS
+    SCORING_DECKS,
+    AMBUSH_CARDS,
+    EXPLORE_CARDS
 }

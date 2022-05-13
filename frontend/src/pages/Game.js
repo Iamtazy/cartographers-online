@@ -2,9 +2,10 @@ import React, { useContext, useEffect, useState } from 'react'
 import { SocketContext } from '../context/socketContext'
 import { GameContext } from '../context/gameContext'
 import styles from '../css/pages/Game.module.css'
-import Tile from '../components/Tile'
+import Board from '../components/Board'
 import SeasonCard from '../components/SeasonCard'
 import ScoringCard from '../components/ScoringCard'
+import TurnCard from '../components/TurnCard'
 
 
 export default function Game() {
@@ -12,7 +13,7 @@ export default function Game() {
   const socket = useContext(SocketContext)
   const { room } = useContext(GameContext)
   const [playersInRoom, setPlayersInRoom] = useState([])
-  const [gameState, setGameState] = useState({ 'board': [], 'seasonCard': { 'name' : ''}, 'scoringCards': []})
+  const [gameState, setGameState] = useState({ 'board': [], 'seasonCard': { 'name' : ''}, 'scoringCards': [], 'turnCards': []})
 
   useEffect(() => {
 
@@ -38,19 +39,10 @@ export default function Game() {
   return (
     <div>
       <div className={styles.gameContainer}>
-        <div className={styles.boardContainer}>
-          <div className={styles.cellContainer}>
-            {gameState.board.map((row, rowIndex) => { return ( 
-            <div className={styles.row} key={rowIndex}> { row.map((cell, cellIndex) => { return ( 
-              <div className={styles.cell} row={rowIndex} col={cellIndex} key={cellIndex}>
-                <Tile value={cell}/>
-              </div> )})} 
-            </div> )})
-            }
-          </div>
-        </div>
+        <Board board={gameState.board} />
         <SeasonCard card={gameState.seasonCard.name} />
         <div style={{'display': 'flex', 'flexDirection': 'row'}}>{gameState.scoringCards.map((card) => <div style={{'margin': '20px'}} key={card}><ScoringCard card={card}/></div>)}</div>
+        <div style={{'display': 'flex', 'flexDirection': 'row'}}>{gameState.turnCards.map((card) => <div style={{'margin': '20px'}} key={card.name}><TurnCard card={card.name}/></div>)}</div>
       </div>
     </div>
   )
