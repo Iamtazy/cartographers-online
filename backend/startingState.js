@@ -31,7 +31,7 @@ const randomizeScoringCards = () => {
 const getStartingState = () => {
     return {
         'board' :  STARTER_BOARD,
-        'seasonCard': SEASON_CARDS.spring,
+        'seasonCard': SEASON_CARDS[0],
         'scoringCards': randomizeScoringCards()
     }
 }
