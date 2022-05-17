@@ -20,7 +20,8 @@ const getStartingState = () => {
         'board' :  STARTER_BOARD,
         'seasonCard': SEASON_CARDS[0],
         'scoringCards': randomizeScoringCards(),
-        'turnCards': [getRandomTurnCard(EXPLORE_CARDS)]
+        'turnCards': [getRandomTurnCard(EXPLORE_CARDS)],
+        'turnTime': 0
     }
 }
 

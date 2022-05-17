@@ -6,6 +6,7 @@ import Board from '../components/Board'
 import SeasonCard from '../components/SeasonCard'
 import ScoringCard from '../components/ScoringCard'
 import TurnCard from '../components/TurnCard'
+import CardShapeField from '../components/CardShapeField'
 
 
 export default function Game() {
@@ -22,6 +23,7 @@ export default function Game() {
     })
 
     socket.on('gameState', (state) =>{
+      //state.board = gameState.board // should be on backend
       setGameState(state)
     })
 
@@ -42,7 +44,8 @@ export default function Game() {
         <Board board={gameState.board} />
         <SeasonCard card={gameState.seasonCard.name} />
         <div style={{'display': 'flex', 'flexDirection': 'row'}}>{gameState.scoringCards.map((card) => <div style={{'margin': '20px'}} key={card}><ScoringCard card={card}/></div>)}</div>
-        <div style={{'display': 'flex', 'flexDirection': 'row'}}>{gameState.turnCards.map((card) => <div style={{'margin': '20px'}} key={card.name}><TurnCard card={card.name}/></div>)}</div>
+        <div style={{'display': 'flex', 'flexDirection': 'row'}}>{gameState.turnCards.map((card) => <div style={{'margin': '20px'}} key={card.name}><TurnCard turnCard={card.name}/></div>)}</div>
+        {gameState.turnCards.length > 0 ? <CardShapeField turnCard={gameState.turnCards[gameState.turnCards.length - 1]} /> : ''}
       </div>
     </div>
   )

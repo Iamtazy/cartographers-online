@@ -38,7 +38,8 @@ const AMBUSH_CARDS = [
             [1,0,1,0],
             [0,0,0,0],
             [0,0,0,0]
-        ]
+        ],
+        'tiles' : ['MON']
     },
     {
         'name': 'gnollRaid',
@@ -49,7 +50,8 @@ const AMBUSH_CARDS = [
             [1,0,0,0],
             [1,1,0,0],
             [0,0,0,0]
-        ]
+        ],
+        'tiles' : ['MON']
     },
     {
         'name': 'goblinAttack',
@@ -60,7 +62,8 @@ const AMBUSH_CARDS = [
             [0,1,0,0],
             [0,0,1,0],
             [0,0,0,0]
-        ]
+        ],
+        'tiles' : ['MON']
     },
     {
         'name': 'koboldOnslaught',
@@ -71,7 +74,8 @@ const AMBUSH_CARDS = [
             [1,1,0,0],
             [1,0,0,0],
             [0,0,0,0]
-        ]
+        ],
+        'tiles' : ['MON']
     }
 ]
 
@@ -91,7 +95,7 @@ const EXPLORE_CARDS = [
                 [0,1,0]
             ],
         ],
-        'tiles': ['farm'],
+        'tiles': ['FA'],
         'isFirstShapeForCoin': true
     },
     {
@@ -106,7 +110,7 @@ const EXPLORE_CARDS = [
                 [0,0,0,0]
             ]
         ],
-        'tiles': ['village', 'water'],
+        'tiles': ['V', 'W'],
         'isFirstShapeForCoin': false
     },
     {
@@ -124,7 +128,7 @@ const EXPLORE_CARDS = [
                 [0,1,0]
             ]
         ],
-        'tiles': ['forest'],
+        'tiles': ['FO'],
         'isFirstShapeForCoin': true
     },
     {
@@ -143,7 +147,7 @@ const EXPLORE_CARDS = [
                 [1,1,0]
             ]
         ],
-        'tiles': ['water'],
+        'tiles': ['W'],
         'isFirstShapeForCoin': true
     },
     {
@@ -161,7 +165,7 @@ const EXPLORE_CARDS = [
                 [0,0,0]
             ]
         ],
-        'tiles': ['village'],
+        'tiles': ['V'],
         'isFirstShapeForCoin': true
     },
     {
@@ -175,7 +179,7 @@ const EXPLORE_CARDS = [
                 [1,0,0]
             ]
         ],
-        'tiles': ['farm', 'water'],
+        'tiles': ['FA', 'W'],
         'isFirstShapeForCoin': false
     },
     {
@@ -189,7 +193,7 @@ const EXPLORE_CARDS = [
                 [1,0,0]
             ]
         ],
-        'tiles': ['village', 'farm'],
+        'tiles': ['V', 'FA'],
         'isFirstShapeForCoin': false
     },
     {
@@ -203,7 +207,7 @@ const EXPLORE_CARDS = [
                 [1,0,0]
             ]
         ],
-        'tiles': ['forest', 'water'],
+        'tiles': ['FO', 'W'],
         'isFirstShapeForCoin': false
     },
     {
@@ -217,7 +221,7 @@ const EXPLORE_CARDS = [
                 [0,0,0]
             ]
         ],
-        'tiles': ['forest', 'farm'],
+        'tiles': ['FO', 'FA'],
         'isFirstShapeForCoin': false
     },
     {
@@ -229,7 +233,7 @@ const EXPLORE_CARDS = [
                 [1]
             ]
         ],
-        'tiles': ['forest', 'village', 'farm', 'water', 'monster'],
+        'tiles': ['FO', 'V', 'FA', 'W', 'MON'],
         'isFirstShapeForCoin': false
     },
     {
@@ -244,7 +248,7 @@ const EXPLORE_CARDS = [
                 [0,0,0,0]
             ]
         ],
-        'tiles': ['forest', 'village'],
+        'tiles': ['FO', 'V'],
         'isFirstShapeForCoin': false
     },
     {

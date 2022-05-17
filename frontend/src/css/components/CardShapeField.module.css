@@ -1,0 +1,12 @@
+.cardShapeFieldContainer {
+    display: flex;
+}
+
+.cardShape {
+    display: flex;
+    flex-direction: column;
+}
+
+.cardShapeRow {
+    display: flex;
+}

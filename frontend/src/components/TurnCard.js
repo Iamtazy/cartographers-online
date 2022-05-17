@@ -19,7 +19,7 @@ import templeRuins from '../assets/turn_cards/explore/temple_ruins.jpg';
 import treetopVillage from '../assets/turn_cards/explore/treetop_village.jpg';
 import exploreBack from '../assets/turn_cards/explore/explore_back.jpg';
 
-export default function TurnCard({ card }) {
+export default function TurnCard({ turnCard }) {
 
     const renderCard = (cell) => {
         switch (cell) {
@@ -67,6 +67,6 @@ export default function TurnCard({ card }) {
 
 
   return (
-    <img className={styles.card} alt={renderCard(card).alt} src={renderCard(card).src}/>
+    <img className={styles.card} alt={renderCard(turnCard).alt} src={renderCard(turnCard).src}/>
   )
 }
