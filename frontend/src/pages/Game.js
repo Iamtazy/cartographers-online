@@ -36,12 +36,19 @@ export default function Game() {
 
   }, [socket, room])
 
-
+  const handleShapeDrop = (event) => {
+    console.log(event)
+    event.preventDefault();
+    var data = event.dataTransfer.getData("shape");
+    event.target.appendChild(document.getElementById(data));
+  }
 
   return (
     <div>
       <div className={styles.gameContainer}>
-        <Board board={gameState.board} />
+        <div className={styles.boardContainer} onDrop={(event) => handleShapeDrop(event)} onDragOver={(event) => event.preventDefault()}>
+          <Board board={gameState.board} />
+        </div>
         <SeasonCard card={gameState.seasonCard.name} />
         <div style={{'display': 'flex', 'flexDirection': 'row'}}>{gameState.scoringCards.map((card) => <div style={{'margin': '20px'}} key={card}><ScoringCard card={card}/></div>)}</div>
         <div style={{'display': 'flex', 'flexDirection': 'row'}}>{gameState.turnCards.map((card) => <div style={{'margin': '20px'}} key={card.name}><TurnCard turnCard={card.name}/></div>)}</div>

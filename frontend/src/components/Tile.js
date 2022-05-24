@@ -11,8 +11,6 @@ export default function Tile({ value }) {
 
 const renderCell = (cell) => {
     switch (cell) {
-        case 'E': 
-            return '';
         case 'MOU':
             return {'src': mountain, 'name': 'mountain'};
         case 'R':
@@ -33,6 +31,6 @@ const renderCell = (cell) => {
 }
 
   return (
-    <div content={renderCell(value).name} style={{width: '50px', height: '50px', backgroundImage: `url(${renderCell(value).src})`, backgroundSize: 'cover'}}/>
+    value !== 'E' ? <div content={renderCell(value).name} style={{width: '50px', height: '50px', backgroundImage: `url(${renderCell(value).src})`, backgroundSize: 'cover'}}/> : ''
   )
 }
