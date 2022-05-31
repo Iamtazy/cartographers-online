@@ -4,6 +4,7 @@ const socketio = require('socket.io')
 const cors = require('cors')
 require('dotenv').config()
 const { STARTER_BOARD, getStartingState } = require('./startingState')
+const { scoreScoringCard } = require('./scoringFunctions')
 
 const app = express()
 app.use(cors())
@@ -131,5 +132,22 @@ const getRooms = () => {
     const rooms = Array.from(io.of('/').adapter.rooms.keys())
     return rooms.filter((room) => room != LOBBY)
 }
+
+
+const testBoard = [
+    ['E', 'E', 'E', 'E', 'E', 'E', 'E', 'E', 'E', 'E', 'E'],
+    ['E', 'E', 'E', 'MOU', 'E', 'R', 'E', 'E', 'E', 'E', 'E'],
+    ['E', 'R', 'E', 'E', 'E', 'E', 'E', 'E', 'MOU', 'R', 'E'],
+    ['E', 'E', 'E', 'E', 'FA', 'W', 'E', 'E', 'E', 'E', 'E'],
+    ['E', 'E', 'E', 'E', 'E', 'E', 'E', 'E', 'E', 'E', 'E'],
+    ['E', 'E', 'E', 'E', 'E', 'MOU', 'E', 'E', 'E', 'E', 'E'],
+    ['E', 'E', 'E', 'E', 'E', 'E', 'E', 'E', 'E', 'E', 'E'],
+    ['E', 'E', 'E', 'E', 'E', 'E', 'E', 'E', 'E', 'E', 'E'],
+    ['E', 'R', 'MOU', 'E', 'E', 'E', 'E', 'E', 'E', 'R', 'E'],
+    ['E', 'E', 'E', 'E', 'E', 'R', 'E', 'MOU', 'E', 'E', 'E'],
+    ['E', 'E', 'E', 'E', 'E', 'E', 'E', 'E', 'E', 'E', 'E']
+]
+
+scoreScoringCard('canalLake', testBoard)
 
 httpServer.listen(8080, () => {console.log('Server is running!')})
