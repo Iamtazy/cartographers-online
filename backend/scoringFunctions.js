@@ -39,33 +39,34 @@ const scoreScoringCard = (scoringCard, board) => {
 
 const scoreBorderlands = (board) => {
     let points = 0
+    //Column
     for (let i = 0; i < board.length; i++) {
-        board.every((row) => row[i] !== 'E' && row[i] !== 'R') ? points += 6 : ''
+        board.every((row) => cellNotEmpty(row[i])) ? points += 6 : ''
     }
-    points += board.filter((row) => row.every((cell) => cell !== 'E' && cell !== 'R')).length * 6
+    //Row
+    points += board.filter((row) => row.every((cell) => cellNotEmpty(cell))).length * 6
     return points
 }
 
 const scoreCanalLake = (board) => {
-    //Water next to farm, farm next to water 1 point
     let points = 0
     board.forEach((row, ri) => {
         row.forEach((cell, ci) => {
             if (cell === 'W' && ((board[ri - 1] !== undefined && board[ri - 1][ci] === 'FA') 
             || (board[ri][ci + 1] === 'FA') 
-            || board[ri + 1] !== undefined && board[ri + 1][ci] === 'FA') 
-            || board[ri][ci - 1] === 'FA') {
+            || board[ri + 1] !== undefined && board[ri + 1][ci] === 'FA' 
+            || board[ri][ci - 1] === 'FA')) {
                 points++
             }
             if (cell === 'FA' && ((board[ri - 1] !== undefined && board[ri - 1][ci] === 'W') 
             || (board[ri][ci + 1] === 'W') 
-            || board[ri + 1] !== undefined && board[ri + 1][ci] === 'W') 
-            || board[ri][ci - 1] === 'W') {
+            || board[ri + 1] !== undefined && board[ri + 1][ci] === 'W' 
+            || board[ri][ci - 1] === 'W')) {
                 points++
             }
         })
     })
-    console.log(points)
+    return points
 }
 
 const scoreGreatCity = (board) => {
@@ -73,7 +74,14 @@ const scoreGreatCity = (board) => {
 }
 
 const scoreGreenbough = (board) => {
-
+    let points = 0
+    //Column
+    for (let i = 0; i < board.length; i++) {
+        board.filter((row) => row[i] === 'FO').length > 0 ? points ++ : ''
+    }
+    //Row
+    points += board.filter((row) => row.some((cell) => cell === 'FO')).length
+    return points
 }
 
 const scoreGreengoldPlains = (board) => {
@@ -89,7 +97,14 @@ const scoreMagesValley = (board) => {
 }
 
 const scoreSentinelWood = (board) => {
-
+    let points = 0
+    //First and last column
+    points += board.filter((row) => row[0] === 'FO').length
+    points += board.filter((row) => row[board.length - 1] === 'FO').length
+    //Top and bottom row
+    points += board[0].filter((cell) => cell === 'FO').length
+    points += board[board.length - 1].filter((cell) => cell === 'FO').length
+    return points
 }
 
 const scoreShieldgate = (board) => {
@@ -105,11 +120,30 @@ const scoreStonesideForest = (board) => {
 }
 
 const scoreTheBrokenRoad = (board) => {
-
+    let points = 0;
+    for(let r = 0; r < board.length; r++){
+        let numOfNonEmpty = 0
+        for (let c = 0; c < board.length - r; c++) {
+            cellNotEmpty(board[r + c][c]) ? numOfNonEmpty++ : ''
+        }
+        numOfNonEmpty === board.length - r ? points++ : ''
+    }
+    return points
 }
 
 const scoreTheCauldrons = (board) => {
-
+    let points = 0
+    board.forEach((row, ri) => {
+        row.forEach((cell, ci) => {
+            if (!cellNotEmpty(cell) && ((board[ri - 1] === undefined || cellNotEmpty(board[ri - 1][ci])) 
+            && (board[ri][ci + 1] === undefined || cellNotEmpty(board[ri][ci + 1])) 
+            && (board[ri + 1] === undefined || cellNotEmpty(board[ri + 1][ci])) 
+            && (board[ri][ci - 1] === undefined || cellNotEmpty(board[ri][ci - 1])))) {
+                points++
+            }
+        })
+    })
+    return points
 }
 
 const scoreTheGoldenGranary = (board) => {
@@ -122,6 +156,10 @@ const scoreTreetower = (board) => {
 
 const scoreWildholds = (board) => {
 
+}
+
+const cellNotEmpty = (cell) => {
+    return cell !== 'E' && cell !== 'R'
 }
 
 
