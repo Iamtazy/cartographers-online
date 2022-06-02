@@ -135,19 +135,19 @@ const getRooms = () => {
 
 
 const testBoard = [
+    ['E', 'E', 'E', 'FA', 'E', 'E', 'E', 'E', 'E', 'E', 'E'],
+    ['E', 'E', 'E', 'MOU', 'E', 'R', 'E', 'E', 'W', 'E', 'E'],
+    ['E', 'R', 'E', 'W', 'E', 'E', 'E', 'FA', 'MOU', 'R', 'E'],
+    ['E', 'E', 'E', 'E', 'E', 'E', 'E', 'E', 'FA', 'E', 'E'],
     ['E', 'E', 'E', 'E', 'E', 'E', 'E', 'E', 'E', 'E', 'E'],
-    ['E', 'E', 'E', 'MOU', 'E', 'R', 'E', 'E', 'E', 'E', 'E'],
-    ['E', 'R', 'W', 'E', 'E', 'E', 'E', 'E', 'MOU', 'R', 'E'],
-    ['E', 'W', 'E', 'W', 'E', 'E', 'E', 'E', 'E', 'E', 'E'],
-    ['E', 'E', 'W', 'E', 'E', 'E', 'E', 'E', 'E', 'E', 'E'],
-    ['W', 'E', 'E', 'E', 'E', 'MOU', 'E', 'E', 'E', 'E', 'E'],
-    ['E', 'W', 'E', 'E', 'E', 'E', 'E', 'E', 'E', 'E', 'E'],
-    ['W', 'E', 'E', 'W', 'E', 'E', 'E', 'E', 'E', 'E', 'W'],
-    ['E', 'R', 'MOU', 'E', 'W', 'E', 'E', 'E', 'E', 'R', 'E'],
-    ['E', 'E', 'E', 'W', 'E', 'R', 'E', 'MOU', 'E', 'E', 'W'],
+    ['E', 'E', 'W', 'E', 'E', 'MOU', 'E', 'FA', 'E', 'E', 'E'],
+    ['E', 'E', 'E', 'E', 'E', 'E', 'E', 'E', 'E', 'E', 'E'],
+    ['E', 'E', 'E', 'E', 'E', 'E', 'E', 'E', 'E', 'E', 'E'],
+    ['E', 'R', 'MOU', 'E', 'E', 'E', 'E', 'E', 'E', 'R', 'E'],
+    ['E', 'E', 'E', 'E', 'E', 'R', 'W', 'MOU', 'E', 'E', 'E'],
     ['E', 'E', 'E', 'E', 'E', 'E', 'E', 'E', 'E', 'E', 'E']
 ]
 
-scoreScoringCard('theCauldrons', testBoard)
+scoreScoringCard('magesValley', testBoard)
 
 httpServer.listen(8080, () => {console.log('Server is running!')})

@@ -93,7 +93,20 @@ const scoreLostBarony = (board) => {
 }
 
 const scoreMagesValley = (board) => {
-
+    let points = 0
+    let adjacentCells = []
+    board.forEach((row, ri) => {
+        row.forEach((cell, ci) => {
+            if (cell === 'MOU') {
+                board[ri - 1] !== undefined ? adjacentCells.push(board[ri - 1][ci]) : ''
+                adjacentCells.push(board[ri][ci + 1])
+                board[ri + 1] !== undefined ? adjacentCells.push(board[ri + 1][ci]) : ''
+                adjacentCells.push(board[ri][ci - 1]) 
+            }
+        })
+    })
+    points += adjacentCells.filter((cell) => cell === 'W').length * 2 + adjacentCells.filter((cell) => cell === 'FA').length
+    return points
 }
 
 const scoreSentinelWood = (board) => {
