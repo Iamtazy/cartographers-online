@@ -126,82 +126,28 @@ const scoreShieldgate = (board) => {
 
 const scoreShoresideExpanse = (board) => {
     let touchedIndices = []
+    let score = 0
     board.forEach((row, ri) => {
         row.forEach((cell, ci) => {
             if (!touchedIndices.some((touchedIndex) => touchedIndex[0] == ri && touchedIndex[1] == ci)){
                 if (cell === 'W'){
-                    
-                    let temp = getContinuousTileIndices(board, ri, ci, cell)
-                    touchedIndices = touchedIndices.concat(temp)
-                    console.log("touchedIndices: ")
-                    console.log(touchedIndices)
-                    console.log("temp: ")
-                    console.log(temp)
+                    let continuousTiles = getContinuousTileIndices(board, ri, ci, cell)
+                    touchedIndices = touchedIndices.concat(continuousTiles)
+                    if  (checkForUnallowedAdjacents(board, continuousTiles, ['FA', undefined])) {
+                        score += 3
+                    }
+                }
+                if (cell === 'FA'){
+                    let continuousTiles = getContinuousTileIndices(board, ri, ci, cell)
+                    touchedIndices = touchedIndices.concat(continuousTiles)
+                    if  (checkForUnallowedAdjacents(board, continuousTiles, ['W', undefined])) {
+                        score += 3
+                    }
                 }
             }
         })
     })
-
-}
-
-
-
-const getContinuousTileIndices = (board, ri, ci, cell, possibleIndices = [], alreadyTouchedIndices = []) => {
-    alreadyTouchedIndices.push([ri, ci])
-    possibleIndices.pop()
-    let adjacentTiles = getAdjacentTiles(board, ri, ci)
-    if (adjacentTiles.includes(cell)){
-        adjacentTiles.forEach((tile, index) => {
-            if (tile === cell) {
-                switch (index) {
-                    case 0: {
-                        if ((!alreadyTouchedIndices.some((alreadyTouchedIndex) => alreadyTouchedIndex[0] == ri - 1 && alreadyTouchedIndex[1] == ci)) &&
-                            (!possibleIndices.some((possibleIndices) => possibleIndices[0] == ri - 1 && possibleIndices[1] == ci))){
-                             possibleIndices.push([ri - 1, ci])
-                        }
-                        break
-                    }
-                    case 1: {
-                        if ((!alreadyTouchedIndices.some((alreadyTouchedIndex) => alreadyTouchedIndex[0] == ri && alreadyTouchedIndex[1] == ci + 1)) &&
-                            (!possibleIndices.some((possibleIndices) => possibleIndices[0] == ri && possibleIndices[1] == ci + 1))){
-                            possibleIndices.push([ri, ci + 1])
-                        }
-                        break
-                    }
-                    case 2: {
-                        if ((!alreadyTouchedIndices.some((alreadyTouchedIndex) => alreadyTouchedIndex[0] == ri + 1 && alreadyTouchedIndex[1] == ci)) &&
-                        (!possibleIndices.some((possibleIndices) => possibleIndices[0] == ri + 1 && possibleIndices[1] == ci))){
-                            possibleIndices.push([ri + 1, ci])
-                        }
-                        break
-                    }
-                    case 3: {
-                        if ((!alreadyTouchedIndices.some((alreadyTouchedIndex) => alreadyTouchedIndex[0] == ri && alreadyTouchedIndex[1] == ci - 1)) &&
-                        (!possibleIndices.some((possibleIndices) => possibleIndices[0] == ri && possibleIndices[1] == ci - 1))){
-                            possibleIndices.push([ri, ci - 1])
-                        }
-                        break
-                    }
-                }
-            }
-        })
-    }
-    console.log("possibleIndices:")
-    console.log(possibleIndices)
-    if (possibleIndices.length > 0) {
-        return [[ri, ci]].concat(getContinuousTileIndices(board, possibleIndices[possibleIndices.length - 1][0], possibleIndices[possibleIndices.length - 1][1], cell, possibleIndices, alreadyTouchedIndices))
-    } else {
-        return [[ri, ci]]
-    }
-}
-
-const getAdjacentTiles = (board, ri, ci) => {
-    let adjacentTiles = []
-    board[ri - 1] !== undefined ? adjacentTiles.push(board[ri - 1][ci]) : adjacentTiles.push(undefined)
-    board[ri][ci + 1] !== undefined ? adjacentTiles.push(board[ri][ci + 1]) : adjacentTiles.push(undefined)
-    board[ri + 1] !== undefined ? adjacentTiles.push(board[ri + 1][ci]) : adjacentTiles.push(undefined)
-    board[ri][ci - 1] !== undefined ? adjacentTiles.push(board[ri][ci - 1]) : adjacentTiles.push(undefined)
-    return adjacentTiles
+    return score
 }
 
 const scoreStonesideForest = (board) => {
@@ -251,7 +197,65 @@ const cellNotEmpty = (cell) => {
     return cell !== 'E' && cell !== 'R'
 }
 
+const checkForUnallowedAdjacents = (board, indicesToCheck, unallowedTiles) => {
+   return indicesToCheck.every((index) =>  !getAdjacentTiles(board, index[0], index[1]).some((adjacentTile) => unallowedTiles.includes(adjacentTile)) )
+}
 
+const getContinuousTileIndices = (board, ri, ci, cell, possibleIndices = [], alreadyTouchedIndices = []) => {
+    alreadyTouchedIndices.push([ri, ci])
+    possibleIndices.pop()
+    let adjacentTiles = getAdjacentTiles(board, ri, ci)
+    if (adjacentTiles.includes(cell)){
+        adjacentTiles.forEach((tile, index) => {
+            if (tile === cell) {
+                switch (index) {
+                    case 0: {
+                        if ((!alreadyTouchedIndices.some((alreadyTouchedIndex) => alreadyTouchedIndex[0] == ri - 1 && alreadyTouchedIndex[1] == ci)) &&
+                            (!possibleIndices.some((possibleIndices) => possibleIndices[0] == ri - 1 && possibleIndices[1] == ci))){
+                             possibleIndices.push([ri - 1, ci])
+                        }
+                        break
+                    }
+                    case 1: {
+                        if ((!alreadyTouchedIndices.some((alreadyTouchedIndex) => alreadyTouchedIndex[0] == ri && alreadyTouchedIndex[1] == ci + 1)) &&
+                            (!possibleIndices.some((possibleIndices) => possibleIndices[0] == ri && possibleIndices[1] == ci + 1))){
+                            possibleIndices.push([ri, ci + 1])
+                        }
+                        break
+                    }
+                    case 2: {
+                        if ((!alreadyTouchedIndices.some((alreadyTouchedIndex) => alreadyTouchedIndex[0] == ri + 1 && alreadyTouchedIndex[1] == ci)) &&
+                        (!possibleIndices.some((possibleIndices) => possibleIndices[0] == ri + 1 && possibleIndices[1] == ci))){
+                            possibleIndices.push([ri + 1, ci])
+                        }
+                        break
+                    }
+                    case 3: {
+                        if ((!alreadyTouchedIndices.some((alreadyTouchedIndex) => alreadyTouchedIndex[0] == ri && alreadyTouchedIndex[1] == ci - 1)) &&
+                        (!possibleIndices.some((possibleIndices) => possibleIndices[0] == ri && possibleIndices[1] == ci - 1))){
+                            possibleIndices.push([ri, ci - 1])
+                        }
+                        break
+                    }
+                }
+            }
+        })
+    }
+    if (possibleIndices.length > 0) {
+        return [[ri, ci]].concat(getContinuousTileIndices(board, possibleIndices[possibleIndices.length - 1][0], possibleIndices[possibleIndices.length - 1][1], cell, possibleIndices, alreadyTouchedIndices))
+    } else {
+        return [[ri, ci]]
+    }
+}
+
+const getAdjacentTiles = (board, ri, ci) => {
+    let adjacentTiles = []
+    board[ri - 1] !== undefined ? adjacentTiles.push(board[ri - 1][ci]) : adjacentTiles.push(undefined)
+    board[ri][ci + 1] !== undefined ? adjacentTiles.push(board[ri][ci + 1]) : adjacentTiles.push(undefined)
+    board[ri + 1] !== undefined ? adjacentTiles.push(board[ri + 1][ci]) : adjacentTiles.push(undefined)
+    board[ri][ci - 1] !== undefined ? adjacentTiles.push(board[ri][ci - 1]) : adjacentTiles.push(undefined)
+    return adjacentTiles
+}
 
 
 module.exports = {
