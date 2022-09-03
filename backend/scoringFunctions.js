@@ -85,7 +85,27 @@ const scoreGreenbough = (board) => {
 }
 
 const scoreGreengoldPlains = (board) => {
-
+    let touchedIndices = []
+    let points = 0
+    board.forEach((row, ri) => {
+        row.forEach((cell, ci) => {
+            if (!touchedIndices.some((touchedIndex) => touchedIndex[0] == ri && touchedIndex[1] == ci)){
+                if (cell === 'V'){
+                    let continuousTiles = getContinuousTileIndices(board, ri, ci, cell)
+                    touchedIndices = touchedIndices.concat(continuousTiles)
+                    const setOfAdjacents = new Set()
+                    continuousTiles.forEach((index) => {getAdjacentTiles(board, index[0], index[1]).forEach((tile) => { 
+                        if(tile !== undefined && cellNotEmpty(tile) && tile !== 'V') {
+                            setOfAdjacents.add(tile)
+                        }})})
+                    if (setOfAdjacents.size >= 3) {
+                        points += 3
+                    }
+                }
+            }
+        })
+    })
+    return points
 }
 
 const scoreLostBarony = (board) => {
@@ -121,12 +141,33 @@ const scoreSentinelWood = (board) => {
 }
 
 const scoreShieldgate = (board) => {
-
+    let touchedIndices = []
+    let continuousVillageSizes = []
+    board.forEach((row, ri) => {
+        row.forEach((cell, ci) => {
+            if (!touchedIndices.some((touchedIndex) => touchedIndex[0] == ri && touchedIndex[1] == ci)){
+                if (cell === 'V') {
+                    let continuousTiles = getContinuousTileIndices(board, ri, ci, cell)
+                    touchedIndices = touchedIndices.concat(continuousTiles)
+                    continuousVillageSizes.push(continuousTiles.length)
+                }
+            }
+        })
+    })
+    if (continuousVillageSizes.length > 1) {
+        const withoutMax = continuousVillageSizes.filter((size) => size !== Math.max(...continuousVillageSizes))
+        if (withoutMax <= continuousVillageSizes.length) {
+            return Math.max(...continuousVillageSizes)
+        }
+        return Math.max(...withoutMax) * 2
+    } else {
+        return 0
+    }
 }
 
 const scoreShoresideExpanse = (board) => {
     let touchedIndices = []
-    let score = 0
+    let points = 0
     board.forEach((row, ri) => {
         row.forEach((cell, ci) => {
             if (!touchedIndices.some((touchedIndex) => touchedIndex[0] == ri && touchedIndex[1] == ci)){
@@ -134,20 +175,20 @@ const scoreShoresideExpanse = (board) => {
                     let continuousTiles = getContinuousTileIndices(board, ri, ci, cell)
                     touchedIndices = touchedIndices.concat(continuousTiles)
                     if  (checkForUnallowedAdjacents(board, continuousTiles, ['FA', undefined])) {
-                        score += 3
+                        points += 3
                     }
                 }
                 if (cell === 'FA'){
                     let continuousTiles = getContinuousTileIndices(board, ri, ci, cell)
                     touchedIndices = touchedIndices.concat(continuousTiles)
                     if  (checkForUnallowedAdjacents(board, continuousTiles, ['W', undefined])) {
-                        score += 3
+                        points += 3
                     }
                 }
             }
         })
     })
-    return score
+    return points
 }
 
 const scoreStonesideForest = (board) => {
