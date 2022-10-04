@@ -136,18 +136,18 @@ const getRooms = () => {
 
 const testBoard = [
     ['E', 'E', 'E', 'E', 'E', 'E', 'E', 'E', 'E', 'E', 'E'],
-    ['E', 'E', 'E', 'MOU', 'E', 'R', 'E', 'E', 'E', 'E', 'E'],
+    ['E', 'E', 'E', 'MOU', 'FO', 'FO', 'FO', 'FO', 'FO', 'E', 'E'],
     ['E', 'R', 'E', 'E', 'E', 'E', 'E', 'E', 'MOU', 'R', 'E'],
-    ['E', 'E', 'E', 'E', 'E', 'E', 'E', 'E', 'E', 'E', 'E'],
+    ['E', 'E', 'E', 'E', 'E', 'FO', 'FO', 'FO', 'FO', 'E', 'E'],
     ['E', 'E', 'E', 'E', 'E', 'E', 'E', 'E', 'E', 'E', 'E'],
     ['E', 'E', 'E', 'E', 'E', 'MOU', 'E', 'E', 'E', 'E', 'E'],
-    ['E', 'E', 'E', 'E', 'E', 'E', 'E', 'E', 'E', 'E', 'E'],
-    ['E', 'E', 'E', 'E', 'E', 'E', 'E', 'E', 'E', 'E', 'E'],
-    ['E', 'R', 'MOU', 'E', 'E', 'E', 'E', 'E', 'E', 'R', 'E'],
+    ['E', 'E', 'E', 'E', 'E', 'E', 'FO', 'E', 'E', 'E', 'E'],
+    ['E', 'E', 'E', 'E', 'E', 'E', 'FO', 'E', 'E', 'E', 'E'],
+    ['E', 'R', 'MOU', 'FO', 'FO', 'FO', 'FO', 'FO', 'E', 'R', 'E'],
     ['E', 'E', 'E', 'E', 'E', 'R', 'E', 'MOU', 'E', 'E', 'E'],
-    ['E', 'E', 'E', 'FA', 'E', 'E', 'E', 'E', 'E', 'E', 'E']
+    ['E', 'E', 'E', 'E', 'E', 'E', 'E', 'E', 'E', 'E', 'E']
 ]
 
-scoreScoringCard('shieldgate', testBoard)
+scoreScoringCard('stonesideForest', testBoard)
 
 httpServer.listen(8080, () => {console.log('Server is running!')})

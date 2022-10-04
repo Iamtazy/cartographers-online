@@ -192,7 +192,27 @@ const scoreShoresideExpanse = (board) => {
 }
 
 const scoreStonesideForest = (board) => {
-
+    let touchedIndices = []
+    let scoredMountainIndices = []
+    board.forEach((row, ri) => {
+        row.forEach((cell, ci) => {
+            if (!touchedIndices.some((touchedIndex) => touchedIndex[0] == ri && touchedIndex[1] == ci)){
+                if (cell === 'FO'){
+                    let continuousTiles = getContinuousTileIndices(board, ri, ci, cell)
+                    touchedIndices = touchedIndices.concat(continuousTiles)
+                    let neededAdjacents = neededAdjacentIndices(board, continuousTiles, 'MOU')
+                    if (neededAdjacents.length > 1) {
+                        neededAdjacents.forEach((index) => {
+                            if (!scoredMountainIndices.some((mountainIndex) => mountainIndex[0] === index[0] && mountainIndex[1] === index[1])) {
+                                scoredMountainIndices.push(index)
+                            }
+                        })
+                    }
+                }
+            }
+        })
+    })
+    return scoredMountainIndices.length * 3
 }
 
 const scoreTheBrokenRoad = (board) => {
@@ -237,6 +257,33 @@ const scoreWildholds = (board) => {
 const cellNotEmpty = (cell) => {
     return cell !== 'E' && cell !== 'R'
 }
+
+const neededAdjacentIndices = (board, indicesToCheck, neededTile) => {
+    let indices = []
+    indicesToCheck.forEach((index) => getAdjacentTiles(board, index[0], index[1]).forEach((adjacentTile, adjacentIndex) => { 
+        if (adjacentTile === neededTile){
+            switch (adjacentIndex) {
+                case 0: {
+                    indices.push([index[0] - 1, index[1]])
+                    break
+                }
+                case 1: {
+                    indices.push([index[0], index[1] + 1])
+                    break
+                }
+                case 2: {
+                    indices.push([index[0] + 1, index[1]])
+                    break
+                }
+                case 3: {
+                    indices.push([index[0], index[1] - 1])
+                    break
+                }
+            }
+        }
+    }))
+    return indices
+ }
 
 const checkForUnallowedAdjacents = (board, indicesToCheck, unallowedTiles) => {
    return indicesToCheck.every((index) =>  !getAdjacentTiles(board, index[0], index[1]).some((adjacentTile) => unallowedTiles.includes(adjacentTile)) )
