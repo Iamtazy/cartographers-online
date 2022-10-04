@@ -243,15 +243,50 @@ const scoreTheCauldrons = (board) => {
 }
 
 const scoreTheGoldenGranary = (board) => {
-
+    let points = 0
+    board.forEach((row, ri) => {
+        row.forEach((cell, ci) => {
+            if (cell === 'FA/R') {
+                points +=3
+            }
+            if (cell.includes('/R')) {
+                points += neededAdjacentIndices(board, [[ri,ci]], 'W').length
+            }
+        })
+    })
+    return points
 }
 
 const scoreTreetower = (board) => {
-
+    let points = 0
+    board.forEach((row, ri) =>{
+        row.forEach((cell, ci) => {
+            if (cell === 'FO' && getAdjacentTiles(board, ri, ci).every((adjacentTile) => cellNotEmpty(adjacentTile))) {
+                points++
+            }
+        })
+    })
+    console.log(points)
+    return points
 }
 
 const scoreWildholds = (board) => {
-
+    let touchedIndices = []
+    let points = 0
+    board.forEach((row, ri) => {
+        row.forEach((cell, ci) => {
+            if (!touchedIndices.some((touchedIndex) => touchedIndex[0] == ri && touchedIndex[1] == ci)){
+                if (cell.includes('V')) {
+                    let continuousTiles = getContinuousTileIndices(board, ri, ci, cell)
+                    touchedIndices = touchedIndices.concat(continuousTiles)
+                    if (continuousTiles.length >= 6) {
+                        points += 8
+                    }
+                }
+            }
+        })
+    })
+    return points
 }
 
 const cellNotEmpty = (cell) => {
@@ -295,7 +330,7 @@ const getContinuousTileIndices = (board, ri, ci, cell, possibleIndices = [], alr
     let adjacentTiles = getAdjacentTiles(board, ri, ci)
     if (adjacentTiles.includes(cell)){
         adjacentTiles.forEach((tile, index) => {
-            if (tile === cell) {
+            if (tile === cell || tile === cell + '/R') {
                 switch (index) {
                     case 0: {
                         if ((!alreadyTouchedIndices.some((alreadyTouchedIndex) => alreadyTouchedIndex[0] == ri - 1 && alreadyTouchedIndex[1] == ci)) &&
